@@ -44,7 +44,15 @@ class PostController extends Controller
         $newPost = new Post();
 
         $slug = Str::slug($data['title'],'-');
-        //da aggiungere controllo unicità slug
+        $slugBase = $slug;
+        $slugPresent = Post::where('slug', $slug)->first();
+
+        $count = 1;
+        while($slugPresent){
+            $slug = $slugBase . '-' .$count;
+            $slugPresent = Post::where('slug', $slug)->first();
+            $count++;
+        }
 
         $newPost->slug =  $slug;
         $newPost->fill($data);
@@ -59,8 +67,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($slug)
     {
+        $post = Post::where('slug', $slug)->first();
         return view('admin.posts.show', compact('post'));
     }
 
@@ -104,6 +113,6 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        return redirect()->route('admin.posts.index');
+        return redirect()->route('admin.posts.index')->with('deleted', 'The post has been deleted');
     }
 }
