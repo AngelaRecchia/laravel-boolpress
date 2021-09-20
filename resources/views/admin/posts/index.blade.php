@@ -20,9 +20,8 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col" class="col-1">#</th>
                         <th scope="col" class="col-2">Title</th>
-                        <th scope="col" class="col-7">Text</th>
+                        <th scope="col" class="col-8">Text</th>
                         <th class="col-2">Actions</th>
                     </tr>
                 </thead>
@@ -30,7 +29,6 @@
                 <tbody>
                     @foreach ($posts as $post)
                     <tr>
-                        <td scope="row">{{ $post->id }} </td>
                         <th>{{ $post->title }}</th>
                         <td id="colText">{{ $post->content }}</td>
                         <td class="text-right d-flex justify-content-around">

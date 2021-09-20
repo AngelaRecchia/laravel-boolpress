@@ -18,7 +18,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-info shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Boolpress
+                    <span id="logo">Boolpress</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -88,7 +88,11 @@
                 </ul>
             </div>
             @endauth
-            @yield('content')
+
+            <div class="container">
+                @yield('content')
+            </div>
+            
         </main>
     </div>
 </body>

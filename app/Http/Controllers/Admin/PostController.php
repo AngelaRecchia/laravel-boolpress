@@ -38,7 +38,10 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //validazione
+        $request->validate([
+            'title' => 'required|max:100',
+            'content' => 'required'
+        ]);
 
         $data = $request->all();
         $newPost = new Post();
@@ -93,11 +96,27 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //inserire validazione request
+        $request->validate([
+            'title' => 'required|max:100',
+            'content' => 'required'
+        ]);
 
         $data = $request->all();
 
-        //inserire controllo per slug
+        if($data['title'] != $post->title){
+
+            $slug = Str::slug($data['title'],'-');
+            $slugBase = $slug;
+            $slugPresent = Post::where('slug', $slug)->first();
+
+            $contatore = 1;
+            while($slug_presente){
+                $slug = $slug_base . '-' . $contatore;
+                $slugPresent = Post::where('slug', $slug)->first();
+                $contatore++;
+            }
+            $data['slug'] = $slug;
+        } 
 
         $post->update($data);
 
